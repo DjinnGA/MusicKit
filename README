@@ -38,3 +38,5 @@ void skipToBeginning()
 ---------- Coming Soon -----------
 void getPlaylists()
 void getSongs()
+void playSong(int id)
+void playPlaylist(int id)
