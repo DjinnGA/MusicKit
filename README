@@ -1,0 +1,40 @@
+Modified 17th August Giles Allensby
+
+***** MusicKit for Gideros Studio ****
+**********************************
+
+Events are dispatched to Gideros Studio.
+
+Known issues:
+
+1. Not all methods and properties are implemented.
+
+Gideros MusicKit Plugin API
+
+To use the plugin:
+
+Copy musickit.mm to Xcode project "plugins" directory and then add to Xcode project.
+
+In lua file:
+
+require "musicKit"
+
+Lua API
+
+void playPause()
+void playSong()
+void pauseSong()
+void stopSong()
+
+void previousSong()
+void nextSong()
+
+void seekForwards()
+void seekBackwards()
+void stopSeeking()
+
+void skipToBeginning()
+
+---------- Coming Soon -----------
+void getPlaylists()
+void getSongs()
