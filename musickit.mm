@@ -113,7 +113,7 @@ static int getPlaylists(lua_State *L)
     
     lua_newtable(L);
     
-    int i=0;
+    int i=1;
     NSLog(@"On: %d", [playlists count]);
     
     for (MPMediaPlaylist *playlist in playlists) {
@@ -122,7 +122,7 @@ static int getPlaylists(lua_State *L)
         //STACK {  table   key     }
         lua_pushstring(L, [[playlist valueForProperty: MPMediaPlaylistPropertyName]UTF8String]);
         //STACK {  table   key     value   }
-        //lua_settable(L,1);
+        lua_settable(L,1);
         i=i+1;
     }
     
@@ -133,12 +133,15 @@ static int getSongs(lua_State *L)
 {
     MPMediaQuery *playlistsQuery = [MPMediaQuery playlistsQuery];
     NSArray* playlists = [playlistsQuery collections];
-    MPMediaPlaylist *playlist = playlists[0];
+    
+    int playNum = 0;//lua_tonumber(L, 0);
+    
+    MPMediaPlaylist *playlist = playlists[playNum];
     NSArray *songs = [playlist items];
     
     lua_newtable(L);
     
-    int i=0;
+    int i=1;
     
     for (MPMediaItem *song in songs) {
         //STACK {   table   }
@@ -149,6 +152,21 @@ static int getSongs(lua_State *L)
         lua_settable(L,1);
         i=i+1;
     }
+    
+    return 1;
+}
+
+static int getPlayState(lua_State *L)
+{
+    NSString *playState;
+    
+    if ([musicPlayer playbackState] == MPMusicPlaybackStatePlaying) {
+        playState = @"playing";
+    } else {
+        playState = @"paused";
+    }
+
+    //lua_pushstring(L, playState);
     
     return 1;
 }
@@ -168,6 +186,7 @@ static int loader(lua_State *L)
         {"skipToBeginning",skipToBeginning},
         {"getPlaylists",getPlaylists},
         {"getSongs",getSongs},
+        {"getPlayState",getPlayState},
         {NULL, NULL},
     };
     luaL_register(L, "musicKit", functionlist);
@@ -190,6 +209,8 @@ static void g_initializePlugin(lua_State* L)
     if (musicPlayer == nil) {
         musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
     }
+    
+    glog_setLevel(GLOG_SUPPRESS);
 }
 
 static void g_deinitializePlugin(lua_State *L)
