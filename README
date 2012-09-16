@@ -1,4 +1,4 @@
-Modified 17th August Giles Allensby
+Modified 16th Sept 2012 Giles Allensby
 
 ***** MusicKit for Gideros Studio ****
 **********************************
@@ -35,8 +35,10 @@ void stopSeeking()
 
 void skipToBeginning()
 
----------- Coming Soon -----------
 void getPlaylists()
+
+---------- Coming Soon -----------
 void getSongs()
+void getPlayState()
 void playSong(int id)
 void playPlaylist(int id)
